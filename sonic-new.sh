@@ -57,7 +57,7 @@ case $choice in
 # accounts.js 파일 생성
 cat <<EOL > "$WORK/accounts.js"
 export const account = [
-$(echo "$privkeys" | sed 's/,/,\n  "/g' | sed 's/^/  "/;s/$/",/')  # 각 프라이빗키를 올바른 형식으로 변환
+$(echo "$privkeys" | sed 's/,/,\n  "/g' | sed 's/^/  "/;s/$/",/' | sed '$ s/,$//')  # 마지막 쉼표 제거
 ];
 EOL
 
