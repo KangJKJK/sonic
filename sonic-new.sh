@@ -55,7 +55,7 @@ case $choice in
     read -p "프라이빗키를 입력하세요 (쉼표로 구분): " privkeys
     
 # account.js 파일 생성
-cat <<EOL > "$WORK/accounts/account.js"
+cat <<EOL > "$WORK/account.js"
 export const account = [
 $(echo "$privkeys" | sed 's/,/\n/g' | sed 's/^/  "/;s/$/",/')
 ];
