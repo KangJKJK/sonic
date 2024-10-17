@@ -57,7 +57,7 @@ case $choice in
 # account.js 파일 생성
 cat <<EOL > "$WORK/account.js"
 export const account = [
-$(echo "$privkeys" | sed 's/,/,\n  "/g' | sed 's/^/  "/;s/$/",/' | sed '$ s/,$//')  # 마지막 쉼표 제거
+$(echo "$privkeys" | sed 's/,/,"\n  "/g' | sed 's/^/  "/;s/$/",/' | sed '$ s/,$//')  # 마지막 쉼표 제거
 ];
 EOL
 
