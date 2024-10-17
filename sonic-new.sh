@@ -54,10 +54,10 @@ case $choice in
     # 사용자로부터 프라이빗키 입력받기
     read -p "프라이빗키를 입력하세요 (쉼표로 구분): " privkeys
     
-# account.js 파일 생성
-cat <<EOL > "$WORK/account.js"
+# accounts.js 파일 생성
+cat <<EOL > "$WORK/accounts/accounts.js"
 export const account = [
-$(echo "$privkeys" | sed 's/,/,"\n  "/g' | sed 's/^/  "/;s/$/",/' | sed '$ s/,$//')  # 마지막 쉼표 제거
+$(echo "$privkeys" | sed 's/,/\n/g' | sed 's/^/  "/;s/$/",/')
 ];
 EOL
 
