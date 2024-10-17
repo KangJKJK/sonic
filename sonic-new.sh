@@ -54,12 +54,12 @@ case $choice in
     # 개인키 입력받기
     read -p "Solana의 개인키를 쉼표로 구분하여 입력하세요: " privkeys
   
-# accounts.js 파일 생성
-cat <<EOL > "$WORK/accounts/accounts.js"
-export const account = [
-$(echo "$privkeys" | sed 's/,/\n/g' | sed 's/^/  "/;s/$/",/')
-];
-EOL
+    # accounts.js 파일 생성
+    cat <<EOL > "$WORK/accounts/accounts.js"
+    export const account = [
+    $(echo "$privkeys" | sed 's/,/\n/g' | sed 's/^/  "/;s/$/",/')
+    ];
+    EOL
 
     echo -e "${GREEN}accounts.js 파일이 성공적으로 생성되었습니다.${NC}"
 
