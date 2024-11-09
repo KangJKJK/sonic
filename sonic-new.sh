@@ -77,7 +77,7 @@ EOL
     done
     
     # 프록시를 배열로 변환
-    IFS=$'\n' read -r -a proxy_array <<< "$proxies"
+    IFS=$'\n' read -r -d '' -a proxy_array <<< "$proxies"
     
     # 결과를 proxy_list.js 파일에 저장
     {
@@ -103,3 +103,4 @@ EOL
     echo -e "${RED}잘못된 선택입니다. 다시 시도하세요.${NC}"
     ;;
 esac
+
