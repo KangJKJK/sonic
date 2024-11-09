@@ -63,24 +63,30 @@ EOL
     
     echo -e "${GREEN}account.js 파일이 성공적으로 생성되었습니다.${NC}"
 
-  # 프록시 정보 입력 안내
+    # 프록시 정보 입력 안내
     echo -e "${YELLOW}프록시 정보를 입력하세요. 입력형식: http://proxyUser:proxyPass@IP:Port${NC}"
-    echo -e "${YELLOW}여러 개의 프록시는 쉼표로 구분하세요.${NC}"
+    echo -e "${YELLOW}여러 개의 프록시는 줄바꿈으로 구분하세요.${NC}"
     echo -e "${YELLOW}챗GPT를 이용해서 형식을 변환해달라고 하면 됩니다.${NC}"
-    read -p "프록시 정보를 입력하시고 엔터를 누르세요: " proxies
-  
-  # 프록시를 배열로 변환
-  IFS=',' read -r -a proxy_array <<< "$proxies"
-
-  # 결과를 proxy_list.js 파일에 저장
-  {
-      echo "export const proxyList = ["
-      for proxy in "${proxy_array[@]}"; do
-          echo "    \"$proxy\","
-      done
-      echo "];"
-  } > /root/Teneo-Bot/config/proxy_list.js
-
+    echo -e "${YELLOW}입력을 마치려면 엔터를 두 번 누르세요.${NC}"
+    
+    # 프록시 정보를 줄바꿈으로 입력받기
+    proxies=""
+    while IFS= read -r line; do
+        [[ -z "$line" ]] && break  # 빈 줄이 입력되면 종료
+        proxies+="$line"$'\n'  # 줄바꿈 추가
+    done
+    
+    # 프록시를 배열로 변환
+    IFS=$'\n' read -r -a proxy_array <<< "$proxies"
+    
+    # 결과를 proxy_list.js 파일에 저장
+    {
+        echo "export const proxyList = ["
+        for proxy in "${proxy_array[@]}"; do
+            echo "    \"$proxy\","
+        done
+        echo "];"
+    } > /root/sonic-tx-bot/proxy_list.js
 
     # 봇 구동
     node index.js
