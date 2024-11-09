@@ -95,6 +95,8 @@ EOL
   2)
     echo -e "${GREEN}소닉 봇을 재실행합니다.${NC}"
     cd "$WORK"
+    curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.3/install.sh | bash
+    [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" # nvm을 로드합니다
     git pull
     node index.js
     ;;
