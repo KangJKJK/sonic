@@ -54,14 +54,33 @@ case $choice in
     # 사용자로부터 프라이빗키 입력받기
     read -p "프라이빗키를 입력하세요 (쉼표로 구분): " privkeys
     
-# account.js 파일 생성
+    # account.js 파일 생성
 cat <<EOL > "$WORK/account.js"
 export const account = [
 $(echo "$privkeys" | sed 's/,/\n/g' | sed 's/^/  "/;s/$/",/')
 ];
 EOL
+    
+    echo -e "${GREEN}account.js 파일이 성공적으로 생성되었습니다.${NC}"
 
-echo -e "${GREEN}account.js 파일이 성공적으로 생성되었습니다.${NC}"
+  # 프록시 정보 입력 안내
+    echo -e "${YELLOW}프록시 정보를 입력하세요. 입력형식: http://proxyUser:proxyPass@IP:Port${NC}"
+    echo -e "${YELLOW}여러 개의 프록시는 쉼표로 구분하세요.${NC}"
+    echo -e "${YELLOW}챗GPT를 이용해서 형식을 변환해달라고 하면 됩니다.${NC}"
+    read -p "프록시 정보를 입력하시고 엔터를 누르세요: " proxies
+  
+  # 프록시를 배열로 변환
+  IFS=',' read -r -a proxy_array <<< "$proxies"
+
+  # 결과를 proxy_list.js 파일에 저장
+  {
+      echo "export const proxyList = ["
+      for proxy in "${proxy_array[@]}"; do
+          echo "    \"$proxy\","
+      done
+      echo "];"
+  } > /root/Teneo-Bot/config/proxy_list.js
+
 
     # 봇 구동
     node index.js
